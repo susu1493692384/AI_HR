@@ -332,18 +332,6 @@ docker-compose down
 docker-compose down -v
 ```
 
-### 方式二：使用启动脚本 (混合模式)
-
-**Windows**:
-```cmd
-scripts\dev-start.bat
-```
-
-**Linux/Mac**:
-```bash
-chmod +x scripts/dev-start.sh
-./scripts/dev-start.sh
-```
 
 ### 方式三：手动启动 (本地开发)
 
@@ -389,7 +377,7 @@ npm run dev
 ### 默认登录
 
 - 用户名: `admin`
-- 密码: `admin123456`
+- 密码: `admin123`
 
 ---
 

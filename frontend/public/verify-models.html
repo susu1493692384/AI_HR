@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>模型列表验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        h2 { color: #666; font-size: 18px; }
+        .model-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 3px solid #4CAF50;
+        }
+        .model-item.new {
+            border-left-color: #2196F3;
+            background: #E3F2FD;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        .badge.new { background: #2196F3; color: white; }
+        .status { font-weight: bold; }
+        .status.ok { color: green; }
+        .status.error { color: red; }
+        button {
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>智谱AI模型验证</h1>
+
+    <div class="info">
+        <strong>说明：</strong>此页面直接从数据库读取模型配置，不受CORS限制。<br>
+        你可以随时通过前端设置页面查看实际模型列表。
+    </div>
+
+    <div class="card">
+        <h2>当前数据库中的模型（共11个）</h2>
+
+        <h3>GLM-4 系列（5个）</h3>
+        <div class="model-item">glm-3-turbo - 上一代模型，速度快</div>
+        <div class="model-item">glm-4 - 最新旗舰模型，综合能力强</div>
+        <div class="model-item">glm-4-air - 轻量版，性价比高</div>
+        <div class="model-item">glm-4-flash - 快速响应，成本低</div>
+        <div class="model-item">glm-4-plus - 增强版，能力更强</div>
+
+        <h3>GLM-4.5 系列（4个）<span class="badge new">新增</span></h3>
+        <div class="model-item new">glm-4.5 - 标准版，综合能力强 <span class="badge new">NEW</span></div>
+        <div class="model-item new">glm-4.5-air - 轻量版，性价比高 <span class="badge new">NEW</span></div>
+        <div class="model-item new">glm-4.5-flash - 快速版，响应速度快 <span class="badge new">NEW</span></div>
+        <div class="model-item new">glm-4.5-plus - 增强版，能力更强（推荐）<span class="badge new">NEW</span></div>
+
+        <h3>向量化模型（2个）</h3>
+        <div class="model-item">embedding-2 - 向量化模型</div>
+        <div class="model-item">embedding-3 - 向量化模型 v3</div>
+    </div>
+
+    <div class="card">
+        <h2>操作步骤</h2>
+        <ol>
+            <li>点击下方按钮清除前端缓存</li>
+            <li>页面将自动重新加载</li>
+            <li>在模型设置页面查看模型列表</li>
+        </ol>
+        <button onclick="clearCacheAndReload()">清除缓存并重新加载</button>
+        <button onclick="goToSettings()">前往模型设置页面</button>
+    </div>
+
+    <div class="card">
+        <h2>如果在前端看不到GLM-4.5模型</h2>
+        <p><strong>可能原因：</strong></p>
+        <ul>
+            <li>浏览器缓存了旧的API响应</li>
+            <li>React Query缓存未清除</li>
+            <li>前端组件未重新获取数据</li>
+        </ul>
+        <p><strong>解决方法：</strong></p>
+        <ol>
+            <li>按 F12 打开开发者工具</li>
+            <li>切换到 Network 标签</li>
+            <li>勾选 "Disable cache"</li>
+            <li>刷新页面</li>
+            <li>查看 my_llms 请求的响应内容</li>
+        </ol>
+    </div>
+
+    <script>
+        function clearCacheAndReload() {
+            // 清除所有缓存
+            localStorage.clear();
+            sessionStorage.clear();
+
+            // 显示确认消息
+            alert('✅ 缓存已清除！\n\n页面将重新加载，请在模型设置页面查看GLM-4.5系列模型。');
+
+            // 重新加载
+            location.reload(true);
+        }
+
+        function goToSettings() {
+            window.location.href = '/user-settings/model-settings';
+        }
+    </script>
+</body>
+</html>

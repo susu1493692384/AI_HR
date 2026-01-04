@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Models</title>
+</head>
+<body>
+    <h1>模型配置调试页面</h1>
+    <div id="result"></div>
+
+    <script>
+        async function checkModels() {
+            const resultDiv = document.getElementById('result');
+
+            try {
+                // 1. 检查已配置的模型
+                const myLlmResponse = await fetch('http://localhost:8000/api/v1/llm/my_llms?include_details=true');
+                const myLlmData = await myLlmResponse.json();
+
+                resultDiv.innerHTML += '<h2>1. 已配置的模型 (my_llms)</h2>';
+                resultDiv.innerHTML += '<pre>' + JSON.stringify(myLlmData, null, 2) + '</pre>';
+
+                // 2. 检查租户设置
+                const tenantResponse = await fetch('http://localhost:8000/api/v1/llm/tenant_info');
+                const tenantData = await tenantResponse.json();
+
+                resultDiv.innerHTML += '<h2>2. 租户设置 (tenant_info)</h2>';
+                resultDiv.innerHTML += '<pre>' + JSON.stringify(tenantData, null, 2) + '</pre>';
+
+                // 3. 分析下拉框选项
+                resultDiv.innerHTML += '<h2>3. 聊天模型下拉框应该显示的选项</h2>';
+
+                if (myLlmData.code === 0 && myLlmData.data) {
+                    const options = [];
+
+                    for (const [factory, data] of Object.entries(myLlmData.data)) {
+                        if (data.llm && Array.isArray(data.llm)) {
+                            for (const model of data.llm) {
+                                if (model.type === 'chat' && model.status === '1') {
+                                    options.push({
+                                        label: model.name,  // 显示的文本
+                                        value: `${model.name}@${factory}`  // 实际的值
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    resultDiv.innerHTML += '<pre>' + JSON.stringify(options, null, 2) + '</pre>';
+
+                    resultDiv.innerHTML += '<h2>4. 当前设置的默认模型</h2>';
+                    if (tenantData.code === 0 && tenantData.data) {
+                        resultDiv.innerHTML += `<p><strong>llm_id:</strong> ${tenantData.data.llm_id}</p>`;
+                        resultDiv.innerHTML += `<p><strong>是否匹配:</strong> ${options.some(o => o.value === tenantData.data.llm_id) ? '✅ 是' : '❌ 否'}</p>`;
+                    }
+                }
+
+            } catch (error) {
+                resultDiv.innerHTML += '<p style="color: red;">错误: ' + error.message + '</p>';
+            }
+        }
+
+        // 页面加载时自动检查
+        window.onload = checkModels;
+    </script>
+</body>
+</html>

@@ -1,0 +1,372 @@
+@import "tailwindcss";
+
+@config "../../tailwind.config.js";
+
+@layer base {
+  * {
+    border-color: #E5E7EB;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #F9FAFB;
+    color: #111827;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  /* Card component styles */
+  .card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #E5E7EB;
+    transition: all 0.2s;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-color: #D1D5DB;
+  }
+
+  /* Button component styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .btn:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  .btn:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #4F46E5;
+  }
+
+  .btn-primary {
+    background-color: #4F46E5;
+    color: white;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #4338CA;
+  }
+
+  .btn-secondary {
+    background-color: #F3F4F6;
+    color: #111827;
+    border: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: #E5E7EB;
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border: 1px solid #D1D5DB;
+    color: #374151;
+  }
+
+  .btn-outline:hover {
+    background-color: #F9FAFB;
+  }
+
+  .btn-outline:focus-visible {
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #6B7280;
+  }
+
+  /* Input component styles */
+  .input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 0.375rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    outline: none;
+  }
+
+  .input:focus {
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  }
+
+  /* Sidebar link styles */
+  .sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .sidebar-link-active {
+    background-color: #E0E7FF;
+    color: #4338CA;
+  }
+
+  .sidebar-link-inactive {
+    color: #4B5563;
+  }
+
+  .sidebar-link-inactive:hover {
+    background-color: #F3F4F6;
+    color: #111827;
+  }
+}
+
+/* Custom scrollbar */
+:root {
+  --scrollbar-width: 8px;
+  --scrollbar-track-color: #f1f5f9;
+  --scrollbar-thumb-color: #cbd5e1;
+  --scrollbar-thumb-hover-color: #94a3b8;
+}
+
+/* Force scrollbar to always be visible */
+html {
+  overflow-y: scroll !important;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-color);
+  border-radius: 4px;
+  margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+  min-height: 40px;
+  transition: background-color 0.2s;
+  border: 1px solid var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  border: none;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track-color);
+}
+
+/* Firefox scrollbar */
+html, * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+}
+
+/* Ensure scrollbar is always visible in Chrome/Edge */
+body::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+body {
+  scrollbar-gutter: stable;
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar for specific elements */
+.main-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+.main-content::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  background-color: transparent;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color);
+  border-radius: 4px;
+  min-height: 40px;
+  opacity: 0.8;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-color);
+  opacity: 1;
+}
+
+/* Sidebar scrollbar */
+nav {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+}
+
+nav::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+nav::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.4);
+  border-radius: 3px;
+  min-height: 30px;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.6);
+}
+
+/* Modal scrollbar */
+.modal-content {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+  min-height: 30px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Fix for dropdown menus and overlays */
+[data-headlessui-state] {
+  scrollbar-gutter: initial !important;
+}
+
+/* Ensure scrollbar visibility during dropdown interaction */
+body:has([data-headlessui-state^='open']) {
+  scrollbar-gutter: stable !important;
+}
+
+/* Headless UI MenuItems container */
+[data-headlessui-state] > [role='menu'] {
+  scrollbar-gutter: initial !important;
+}
+
+/* Fix for any overlay or portal */
+.fixed {
+  scrollbar-gutter: initial !important;
+}
+
+/* Preserve scrollbar on body when dropdowns are open */
+body {
+  padding-right: 0 !important;
+  overflow-x: hidden !important;
+  position: static !important;
+  width: 100% !important;
+}
+
+/* Prevent any scrollbar-related width changes */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Prevent layout shift during dropdown interactions */
+html {
+  padding-right: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensure consistent width */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Headless UI Portal content */
+[data-headlessui-portal] {
+  scrollbar-gutter: initial !important;
+}
+
+/* Menu items dropdown */
+[role='menu'] {
+  scrollbar-gutter: initial !important;
+}
+
+[role='listbox'] {
+  scrollbar-gutter: initial !important;
+}
+
+/* Specific fix for dropdown menus */
+.dropdown-menu {
+  scrollbar-gutter: initial !important;
+}
+
+/* Ensure container maintains scrollbar when dropdown is open */
+.main-container {
+  overflow-y: scroll !important;
+  scrollbar-gutter: stable !important;
+}
+
+/* Force scrollbar to be always visible */
+html, body {
+  overflow-y: scroll !important;
+}
+
+/* Prevent dropdown from affecting parent scrollbar */
+div[class*="absolute"][class*="z-50"] {
+  scrollbar-gutter: initial !important;
+}
+
+/* Animation for slide-in effect */
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}

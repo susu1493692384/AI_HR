@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-react-app:*)",
+      "Bash(python:*)",
+      "Bash(ls:*)",
+      "Bash(tree:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(venv/Scripts/python.exe:*)",
+      "Bash(venv/Scripts/pip.exe:*)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(venvScriptspip.exe install:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx umi build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx -p typescript tsc:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(timeout:*)"
+    ]
+  }
+}

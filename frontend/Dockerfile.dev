@@ -1,0 +1,28 @@
+# 前端开发环境 Dockerfile
+# 使用 Node 20 LTS 版本，解决 crypto.hash 兼容性问题
+FROM node:20-alpine
+
+WORKDIR /app
+
+# 安装必要的构建工具
+RUN apk add --no-cache python3 make g++ openssl
+
+# 复制 package 文件
+COPY package*.json ./
+
+# 清理 npm 缓存并安装依赖
+RUN npm cache clean --force && \
+    npm install --no-optional --legacy-peer-deps
+
+# 复制源代码
+COPY . .
+
+# 暴露端口
+EXPOSE 3000
+
+# 设置环境变量
+ENV VITE_API_BASE_URL=http://localhost:8000
+ENV VITE_WS_BASE_URL=ws://localhost:8000
+
+# 启动开发服务器，禁用依赖优化以避免 crypto.hash 问题
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--force"]

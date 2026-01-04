@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>清除前端缓存</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+        button { padding: 10px 20px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 4px; font-family: monospace; white-space: pre-wrap; }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
+    <h1>清除前端缓存工具</h1>
+
+    <div class="section">
+        <h2>步骤1：清除所有缓存</h2>
+        <button class="btn-danger" onclick="clearAllCaches()">清除所有缓存</button>
+        <button class="btn-primary" onclick="reloadPage()">重新加载页面</button>
+        <div id="cache-log" class="log"></div>
+    </div>
+
+    <div class="section">
+        <h2>步骤2：跳转到模型设置</h2>
+        <button class="btn-success" onclick="goToSettings()">前往模型设置页面</button>
+    </div>
+
+    <div class="section">
+        <h2>步骤3：验证模型列表</h2>
+        <button class="btn-primary" onclick="testAPI()">测试API返回的模型</button>
+        <div id="api-result"></div>
+    </div>
+
+    <script>
+        function log(msg) {
+            const logEl = document.getElementById('cache-log');
+            logEl.textContent += msg + '\n';
+        }
+
+        function clearAllCaches() {
+            document.getElementById('cache-log').textContent = '';
+
+            // 清除localStorage
+            const lsCount = localStorage.length;
+            localStorage.clear();
+            log(`✅ 清除了 ${lsCount} 个localStorage项`);
+
+            // 清除sessionStorage
+            const ssCount = sessionStorage.length;
+            sessionStorage.clear();
+            log(`✅ 清除了 ${ssCount} 个sessionStorage项`);
+
+            // 清除React Query缓存（如果在window上）
+            if (window.__REACT_QUERY_CLIENT__) {
+                window.__REACT_QUERY_CLIENT__.clear();
+                log('✅ 清除了React Query缓存');
+            }
+
+            // 清除所有可能存储API数据的键
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('llm') || key.includes('model') || key.includes('api'))) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+            if (keysToRemove.length > 0) {
+                log(`✅ 清除了 ${keysToRemove.length} 个LLM相关缓存项`);
+            }
+
+            log('\n所有缓存已清除！请点击"重新加载页面"按钮。');
+        }
+
+        function reloadPage() {
+            // 强制重新加载，忽略缓存
+            location.reload(true);
+        }
+
+        function goToSettings() {
+            window.location.href = '/user-settings/model-settings';
+        }
+
+        async function testAPI() {
+            const resultDiv = document.getElementById('api-result');
+            resultDiv.innerHTML = '<p>正在测试API...</p>';
+
+            try {
+                // 添加时间戳避免缓存
+                const response = await fetch('http://localhost:8000/api/v1/llm/my_llms?include_details=true&_t=' + Date.now());
+                const data = await response.json();
+
+                if (data.code === 0 && data.data && data.data['ZHIPU-AI']) {
+                    const models = data.data['ZHIPU-AI'].llm || [];
+                    const glm45Models = models.filter(m => m.name.includes('4.5'));
+
+                    let html = `<p>✅ API返回成功！共 ${models.length} 个模型</p>`;
+                    html += '<h3>GLM-4.5系列模型：</h3><ul>';
+                    glm45Models.forEach(m => {
+                        html += `<li>${m.name} - ${m.status === '1' ? '✅' : '❌'}</li>`;
+                    });
+                    html += '</ul>';
+
+                    if (glm45Models.length === 0) {
+                        html += '<p style="color:red">⚠️ 未找到GLM-4.5系列模型！</p>';
+                    } else {
+                        html += `<p style="color:green">✅ 找到 ${glm45Models.length} 个GLM-4.5系列模型</p>`;
+                    }
+
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = '<p style="color:red">❌ API返回数据格式错误</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = '<p style="color:red">❌ 错误: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>

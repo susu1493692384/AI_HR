@@ -271,66 +271,7 @@ AI_HR/
 | PostgreSQL | 15+ |
 | Redis | 7+ |
 
-### 方式一：Docker 部署 (推荐)
 
-#### 1. 克隆项目
-
-```bash
-git clone https://github.com/your-username/ai-hr.git
-cd ai-hr
-```
-
-#### 2. 启动服务
-
-**开发模式 (支持热重载)**:
-```bash
-docker-compose --profile dev up -d
-```
-
-**生产模式**:
-```bash
-docker-compose up -d
-```
-
-**完整生产环境 (带 Nginx)**:
-```bash
-docker-compose --profile production up -d
-```
-
-#### 3. 查看服务状态
-
-```bash
-docker-compose ps
-```
-
-#### 4. 查看日志
-
-```bash
-# 所有服务日志
-docker-compose logs -f
-
-# 特定服务日志
-docker-compose logs -f backend
-docker-compose logs -f frontend-dev
-```
-
-#### 5. 访问应用
-
-| 服务 | 地址 |
-|------|------|
-| 前端应用 | http://localhost:3000 |
-| 后端 API | http://localhost:8000 |
-| API 文档 | http://localhost:8000/docs |
-| Nginx (生产) | http://localhost:80 |
-
-#### 6. 停止服务
-
-```bash
-docker-compose down
-
-# 清理数据卷
-docker-compose down -v
-```
 
 
 ### 方式三：手动启动 (本地开发)
@@ -598,7 +539,7 @@ Content-Type: application/json
 
 {
   "username": "admin",
-  "password": "admin123456"
+  "password": "admin123"
 }
 
 // 响应
@@ -1229,38 +1170,6 @@ docker-compose restart postgres
 
 ---
 
-## 🤝 贡献指南
-
-我们欢迎所有形式的贡献！
-
-### 贡献流程
-
-1. Fork 本仓库
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 创建 Pull Request
-
-### 代码规范
-
-- 遵循现有代码风格
-- 添加必要的注释和文档
-- 确保测试通过
-- 更新相关文档
-
----
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件
-
----
-
-## 👥 作者
-
-- **您的名字** - *项目维护者* - [your.email@example.com]
-
----
 
 ## 🙏 致谢
 
@@ -1273,18 +1182,5 @@ docker-compose restart postgres
 
 ---
 
-## 📞 联系方式
-
-- 项目主页: [https://github.com/your-username/ai-hr](https://github.com/your-username/ai-hr)
-- 问题反馈: [GitHub Issues](https://github.com/your-username/ai-hr/issues)
-- 邮箱: [your.email@example.com](mailto:your.email@example.com)
-
----
-
-<div align="center">
-
-**如果这个项目对您有帮助，请给我们一个 ⭐️**
-
-Made with ❤️ by AI HR Team
 
 </div>

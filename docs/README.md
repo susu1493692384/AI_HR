@@ -260,21 +260,3 @@ A: 修改`backend/app/services/langchain_services/agents/`中的智能体，添�
 
 ### Q: 如何自定义分析评分规则？
 A: 在`backend/app/services/langgraph_workflows/resume_analysis_workflow.py`中修改评分逻辑。
-
-## 贡献指南
-
-1. Fork项目
-2. 创建功能分支
-3. 提交代码
-4. 推送到分支
-5. 创建Pull Request
-
-## 许可证
-
-MIT License
-
-## 联系方式
-
-- 项目维护者: [Your Name]
-- 邮箱: [your.email@example.com]
-- 项目地址: [https://github.com/your-username/ai-hr]
